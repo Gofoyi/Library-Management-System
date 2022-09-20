@@ -1,6 +1,6 @@
 package com.book.service;
 
-public interface returnService {
+public interface DeleteService {
 
     int deleteBorrowInfo(int id);
     int deleteBookInfo(int id);

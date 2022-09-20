@@ -2,13 +2,13 @@ package com.book.service.Impl;
 
 import com.book.mapper.AuthMapper;
 import com.book.mapper.BookMapper;
-import com.book.service.returnService;
+import com.book.service.DeleteService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
 @Service
-public class returnServiceImpl implements returnService {
+public class DeleteServiceImpl implements DeleteService {
 
     @Resource
     BookMapper mapper;

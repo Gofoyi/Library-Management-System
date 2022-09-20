@@ -1,6 +1,6 @@
 package com.book.controller.api;
 
-import com.book.service.returnService;
+import com.book.service.DeleteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 public class DeleteController {
 
     @Resource
-    returnService service;
+    DeleteService service;
 
     @RequestMapping(value = "/return_book", params = {"id"})
     public String return_Book(@RequestParam("id") int id){
