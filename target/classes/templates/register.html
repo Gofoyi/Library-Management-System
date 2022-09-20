@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="zxx" xmlns:th = "http://www.thymeleaf.org">
+<!--<![endif]-->
+<!-- Begin Head -->
+
+<head>
+    <title>注册- 图书管理系统</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="MobileOptimized" content="320">
+    <!--Start Style -->
+    <link rel="stylesheet" type="text/css" href="static/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/auth.css">
+</head>
+
+<body>
+    <div class="ad-auth-wrapper">
+        <div class="ad-auth-box">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="ad-auth-img">
+                        <img src="static/picture/auth-img1.png" alt="">
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="ad-auth-content">
+                        <form action="doRegister" method="post" autocomplete="off">
+                            <h2><span class="primary">欢迎！</span></h2>
+                            <p>请填写下列信息以完成注册</p>
+                            <p th:if="${registerFailure}" style="color: red">账号已注册！</p>
+                            <div class="ad-auth-form">
+                                <div class="ad-auth-feilds mb-30">
+                                    <input name="uid" type="text" placeholder="学号" class="ad-input">
+                                    <p th:if="${uidFailure}" style="color: red">学号必须为11位数字！</p>
+                                </div>
+								<div class="ad-auth-feilds mb-30">
+                                    <input name="username" type="text" placeholder="姓名" class="ad-input" autocomplete="name">
+                                    <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p>
+                                </div>
+                                <div class="ad-auth-feilds mb-30">
+                                    <input name="sex" type="text" placeholder="性别" class="ad-input">
+                                    <p th:if="${sexFailure}" style="color: red">性别必须输入男或女!</p>
+                                </div>
+                                <div class="ad-auth-feilds mb-30">
+                                    <input name="grade" type="text" placeholder="年级" class="ad-input">
+                                </div>
+                                <div class="ad-auth-feilds">
+                                    <input name="password" type="password" placeholder="密码" class="ad-input" autocomplete="new-password">
+                                    <p th:if="${passwordFailure}" style="color: red">密码必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="ad-auth-btn">
+                                <button class="ad-btn ad-login-member">注册</button>
+                            </div>
+                            <p class="ad-register-text">已经有账号了? <a href="login">登录</a></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
