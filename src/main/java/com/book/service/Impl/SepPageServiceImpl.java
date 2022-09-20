@@ -1,10 +1,10 @@
 package com.book.service.Impl;
 
-import com.book.entity.Pages;
 import com.book.entity.Book;
+import com.book.entity.Pages;
 import com.book.entity.Student;
 import com.book.mapper.AuthMapper;
-import com.book.service.BorrowListService;
+import com.book.service.GetDataService;
 import com.book.service.SepPageService;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class SepPageServiceImpl implements SepPageService {
     AuthMapper mapper;
 
     @Resource
-    BorrowListService service;
+    GetDataService service;
 
     @Override
     public Pages<Student> getStudentPages(int SepPageNum) {

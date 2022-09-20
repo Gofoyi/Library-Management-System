@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Scanner;
 
 @SpringBootTest
-class SpringbootBookManageApplicationTests {
+class SpringbootBookManageApplicationTestsInfo {
 
     @Test
     void tes1() {

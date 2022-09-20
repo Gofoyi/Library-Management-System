@@ -16,9 +16,6 @@ public class AddInfoServiceImpl implements AddInfoService {
     @Resource
     BookMapper mapper;
 
-    @Resource
-    AuthMapper authMapper;
-
     @Override
     public int addBorrowInfo(int bid, String uid) {
         return mapper.addBorrowInfo(bid, uid);
@@ -29,30 +26,7 @@ public class AddInfoServiceImpl implements AddInfoService {
         return mapper.addBookInfo(BookName, desc, price);
     }
 
-    @Override
-    public int getStudentCounts() {
-        return authMapper.getStudentCounts();
-    }
 
-    @Override
-    public int getBookCounts() {
-        return mapper.getBookCounts();
-    }
-
-    @Override
-    public int getAvailBookCounts() {
-        return mapper.getAvailBookCounts();
-    }
-
-    @Override
-    public List<Student> getStudentList() {
-        return authMapper.getStudentList();
-    }
-
-    @Override
-    public int getStudentBookCounts(String username) {
-        return mapper.getStudentBookCounts(authMapper.getUidByUsername(username));
-    }
 
 
 

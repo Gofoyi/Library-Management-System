@@ -3,17 +3,22 @@ package com.book.service.Impl;
 
 import com.book.entity.Book;
 import com.book.entity.Borrow;
+import com.book.entity.Student;
+import com.book.mapper.AuthMapper;
 import com.book.mapper.BookMapper;
-import com.book.service.BorrowListService;
+import com.book.service.GetDataService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 @Service
-public class BorrowListServiceImpl implements BorrowListService {
+public class GetDataServiceImpl implements GetDataService {
 
     @Resource
     BookMapper mapper;
+
+    @Resource
+    AuthMapper authMapper;
 
     @Override
     public List<Book> getBorrowListByRole(String role) {
@@ -48,5 +53,29 @@ public class BorrowListServiceImpl implements BorrowListService {
         return list;
     }
 
+    @Override
+    public int getStudentCounts() {
+        return authMapper.getStudentCounts();
+    }
+
+    @Override
+    public int getBookCounts() {
+        return mapper.getBookCounts();
+    }
+
+    @Override
+    public int getAvailBookCounts() {
+        return mapper.getAvailBookCounts();
+    }
+
+    @Override
+    public List<Student> getStudentList() {
+        return authMapper.getStudentList();
+    }
+
+    @Override
+    public int getStudentBookCounts(String username) {
+        return mapper.getStudentBookCounts(authMapper.getUidByUsername(username));
+    }
 
 }

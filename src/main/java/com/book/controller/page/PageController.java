@@ -5,7 +5,7 @@ import com.book.entity.Book;
 import com.book.entity.Pages;
 import com.book.entity.Student;
 import com.book.service.AddInfoService;
-import com.book.service.BorrowListService;
+import com.book.service.GetDataService;
 import com.book.service.SepPageService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 public class PageController {
 
     @Resource
-    BorrowListService borrowListService;
+    GetDataService getDataService;
 
     @Resource
     AddInfoService addInfoService;
@@ -57,10 +57,10 @@ public class PageController {
         model.addAttribute("Num",PageNum);
 
         //顶部信息
-        model.addAttribute("studentcount", addInfoService.getStudentCounts());
-        model.addAttribute("bookcount", addInfoService.getBookCounts());
-        model.addAttribute("availbookcount", addInfoService.getAvailBookCounts());
-        model.addAttribute("StudentBookCounts",addInfoService.getStudentBookCounts((String) session.getAttribute("username")));
+        model.addAttribute("studentcount", getDataService.getStudentCounts());
+        model.addAttribute("bookcount", getDataService.getBookCounts());
+        model.addAttribute("availbookcount", getDataService.getAvailBookCounts());
+        model.addAttribute("StudentBookCounts",getDataService.getStudentBookCounts((String) session.getAttribute("username")));
         return "index";
     }
 
@@ -84,8 +84,8 @@ public class PageController {
 
     @RequestMapping("/add_borrow")
     public String addBorrow(Model model){
-        model.addAttribute("student_List",addInfoService.getStudentList());
-        model.addAttribute("availBookList",borrowListService.getAvailBookList());
+        model.addAttribute("student_List",getDataService.getStudentList());
+        model.addAttribute("availBookList", getDataService.getAvailBookList());
         return "add_borrow";
     }
 
