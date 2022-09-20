@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 
 @Controller
-public class deleteController {
+public class DeleteController {
 
     @Resource
     returnService service;
