@@ -27,9 +27,6 @@ public class PageController {
     GetDataService getDataService;
 
     @Resource
-    AddInfoService addInfoService;
-
-    @Resource
     SepPageService pageService;
 
     @ModelAttribute(value = "role")
