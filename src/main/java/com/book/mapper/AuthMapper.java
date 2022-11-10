@@ -28,6 +28,10 @@ public interface AuthMapper {
     @Insert("insert into user(uid, username, role, password) values(#{uid}, #{username}, #{role}, #{password})")
     int registerUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password);
 
+    //注册用户，插入一条带有邮箱的用户信息
+    @Insert("insert into user(uid, username, role, password,email) values(#{uid}, #{username}, #{role}, #{password}, #{email})")
+    int registerEmailedUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
+
     //注册用户，插入一条学生信息
     @Insert("insert into student(uid, name, grade, sex) values(#{uid}, #{name}, #{grade}, #{sex})")
     int addStudentInfo(@Param("uid") String uid, @Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);

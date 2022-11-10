@@ -46,9 +46,13 @@ public class RegisterController {
                            @RequestParam("username") String name,
                            @RequestParam("sex") String sex,
                            @RequestParam("grade") String grade,
-                           @RequestParam("password") String password, HttpSession session){
-            if(service.register(uid, name, sex, grade, password, session))
+                           @RequestParam("password") String password,
+                           @RequestParam("email") String email,
+                           @RequestParam("verify_code") String code,
+                           HttpSession session){
+            if(service.doEmailRegister(uid, name, sex, grade, password, email, code, session)) {
                 return "redirect:login";
+            }
             else
                 return "redirect:register";
         }
