@@ -18,8 +18,7 @@ public class VerifyServiceImpl implements VerifyService {
     JavaMailSender sender;
     @Resource
     StringRedisTemplate stringRedisTemplate;
-    @Value("810520440@qq.com")
-    String from;
+
 
     @Override
     public void sendVerifyCode(String email) {
@@ -30,7 +29,7 @@ public class VerifyServiceImpl implements VerifyService {
         stringRedisTemplate.opsForValue().set("verify:code:"+email,code+"" ,3, TimeUnit.MINUTES);
         message.setText("您的注册验证码为："+code+", 三分钟内有效，请及时完成注册！如果不是本人操作，请忽略。");
         message.setTo(email);
-        message.setFrom(from);
+        message.setFrom("library_gdufe@163.com");
         sender.send(message);
     }
 
