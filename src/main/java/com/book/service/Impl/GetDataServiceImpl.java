@@ -20,6 +20,10 @@ public class GetDataServiceImpl implements GetDataService {
     @Resource
     AuthMapper authMapper;
 
+    public List<Book> getBookListByTitle(String title){
+        return mapper.getBookListByTitle(title);
+    }
+
     @Override
     public List<Book> getBorrowListByRole(String role) {
         return null;
@@ -73,6 +77,11 @@ public class GetDataServiceImpl implements GetDataService {
     @Override
     public List<Student> getStudentList() {
         return authMapper.getStudentList();
+    }
+
+    @Override
+    public List<Student> getStudentListByName(String name) {
+        return authMapper.getStudentListByName(name);
     }
 
     @Override

@@ -40,6 +40,10 @@ public interface AuthMapper {
     @Select("Select * from student")
     List<Student> getStudentList();
 
+    //根据学生列表
+    @Select("Select * from student where name like '%${name}%'")
+    List<Student> getStudentListByName(String name);
+
     //获取学生总数量
     @Select("Select count(*) from student")
     int getStudentCounts();

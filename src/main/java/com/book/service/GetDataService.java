@@ -7,6 +7,7 @@ import com.book.entity.Student;
 import java.util.List;
 
 public interface GetDataService {
+    List<Book> getBookListByTitle(String title);
 
     List<Book> getBorrowListByRole(String role);
 
@@ -25,6 +26,8 @@ public interface GetDataService {
     int getAvailBookCounts();
 
     List<Student> getStudentList();
+
+    List<Student> getStudentListByName(String name);
 
     int getStudentBookCounts(String username);
 }

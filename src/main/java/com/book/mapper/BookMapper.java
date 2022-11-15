@@ -8,6 +8,15 @@ import java.util.List;
 
 @Mapper
 public interface BookMapper {
+    @Results({
+            @Result(column = "bid", property = "Book_id"),
+            @Result(column = "title", property = "Book_name"),
+            @Result(column = "price", property = "price"),
+            @Result(column = "desc", property = "Desc"),
+            @Result(column = "bid", property ="borrow", one = @One(select = "getBorrowInfoByBid"))
+    })
+    @Select("select * from book where title like '%${title}%'")
+    List<Book> getBookListByTitle(String title);
 
     //获取所有书籍列表
     @Results({

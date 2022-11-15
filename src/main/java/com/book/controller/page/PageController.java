@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class PageController {
@@ -76,12 +77,30 @@ public class PageController {
         return "books";
     }
 
+    @RequestMapping("findBook")
+    public String findBook(String title, Model model){
+        List<Book> list = getDataService.getBookListByTitle(title);
+        model.addAttribute("book_list", list);
+        model.addAttribute("Num",1);
+        model.addAttribute("TotalPageNum",1);
+        return "books";
+    }
+
     @RequestMapping("student")
     public String student(@RequestParam(value = "PageNum", defaultValue = "1") int PageNum, Model model){
         Pages<Student> pages = pageService.getStudentPages(10);
         model.addAttribute("list",pages.getSepPage(PageNum));
         model.addAttribute("Num",PageNum);
         model.addAttribute("TotalPageNum",pages.getTotalPageNum());
+        return "student";
+    }
+
+    @RequestMapping("findStudent")
+    public String findStudent(String name, Model model){
+        List<Student> list = getDataService.getStudentListByName(name);
+        model.addAttribute("list", list);
+        model.addAttribute("Num",1);
+        model.addAttribute("TotalPageNum",1);
         return "student";
     }
 
