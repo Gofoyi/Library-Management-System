@@ -16,6 +16,8 @@ public interface GetDataService {
 
     List<Book> getUserBookList(String username);
 
+    String getUidByUsername(String username);
+
     int getStudentCounts();
 
     int getBookCounts();

@@ -53,6 +53,8 @@ public class GetDataServiceImpl implements GetDataService {
         return list;
     }
 
+    public String getUidByUsername(String username){return authMapper.getUidByUsername(username);}
+
     @Override
     public int getStudentCounts() {
         return authMapper.getStudentCounts();

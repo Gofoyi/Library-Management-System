@@ -42,6 +42,12 @@ public class PageController {
         return String.valueOf(user.getUsername());
     }
 
+    @ModelAttribute(value = "uid")
+    public String uid(@SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context){
+        User user = (User) context.getAuthentication().getPrincipal();
+        return String.valueOf(getDataService.getUidByUsername(user.getUsername()));
+    }
+
 
     @RequestMapping("index")
     public String index(@RequestParam(value = "PageNum", defaultValue = "1") int PageNum, Model model, HttpSession session){

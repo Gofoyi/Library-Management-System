@@ -72,7 +72,7 @@ public class RegisterServiceImpl implements RegisterService {
         boolean flag = doDataVerify(uid, name, sex, password, session);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         //单独验证邮箱
-        if (service.doEmailVerify(email, code) && flag){
+        if (flag && service.doEmailVerify(email, code)){
             if (mapper.registerEmailedUser(uid, name, "user", encoder.encode(password),email) <=0 ){
                 throw new RuntimeException("User注册失败！");
             }
@@ -80,6 +80,6 @@ public class RegisterServiceImpl implements RegisterService {
                 throw new RuntimeException("Student注册失败！");
             }
         }
-        return service.doEmailVerify(email, code) && flag;
+        return flag && service.doEmailVerify(email, code);
     }
 }

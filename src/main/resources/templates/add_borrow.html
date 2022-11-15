@@ -2,7 +2,8 @@
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
 <!--[if !IE]><!-->
-<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org"
+      xmlns:sec = "http://www.thymeleaf.org/extras/spring-security">
 <!--<![endif]-->
 <!-- Begin Head -->
 
@@ -35,7 +36,7 @@
         <header class="header-wrapper main-header">
             <div class="header-inner-wrapper">
                 <div class="logo-wrapper">
-                    <a href="" class="admin-logo">
+                    <a href="index" class="admin-logo">
                         <img src="static/picture/logo.png" alt="">
                     </a>
                 </div>
@@ -78,7 +79,7 @@
         <aside class="sidebar-wrapper">
             <div class="side-menu-wrap">
                 <ul class="main-menu">
-                    <li class="active">
+                    <li sec:authorize="hasRole('admin')" class="active">
                         <a href="index">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
@@ -88,8 +89,28 @@
                             </span>
                         </a>
                     </li>
+                    <li sec:authorize="hasRole('user')">
+                        <a href="index">
+                            <span class="icon-menu feather-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </span>
+                            <span class="menu-text">
+                                个人中心
+                            </span>
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('user')" class="active">
+                        <a href="add_borrow">
+                            <span class="icon-menu feather-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </span>
+                            <span class="menu-text">
+                                自助借阅
+                            </span>
+                        </a>
+                    </li>
                     
-                    <li>
+                    <li sec:authorize="hasRole('admin')">
                         <a href="books">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -100,7 +121,7 @@
                         </a>
                     </li>
 
-                    <li>
+                    <li sec:authorize="hasRole('admin')">
                         <a href="student">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -157,7 +178,8 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" sec:authorize="hasRole('admin')">
                                                     <div class="form-group">
                                                         <label for="city" class="col-form-label">Student Name</label>
                                                         <select class="select2 form-control" id="city" name="uid">
@@ -165,6 +187,16 @@
                                                         </select>
                                                     </div>
                                                 </div>
+
+                                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" sec:authorize="hasRole('user')">
+                                                    <div class="form-group">
+                                                        <label for="city" class="col-form-label">Student Name</label>
+                                                        <select class="select2 form-control" id="city" name="uid">
+                                                            <option th:value="${uid}" th:text="${username}"></option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <hr class="mt-4 mb-4">
                                             <div class="form-group mb-0">

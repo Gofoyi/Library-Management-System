@@ -60,7 +60,9 @@
                             <div class="user-info-box">
                                 <div class="drop-down-header">
                                     <h4 th:text="${username}">John Brown</h4>
-                                    <p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>
+<!--                                    <p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>-->
+                                    <p sec:authorize="hasRole('admin')">图书管理员</p>
+                                    <p sec:authorize="hasRole('user')">在校学生</p>
                                 </div>
                                 <ul>
                                     <li>
@@ -79,8 +81,8 @@
         <aside class="sidebar-wrapper">
             <div class="side-menu-wrap">
                 <ul class="main-menu">
-                    <li sec:authorize="hasRole('admin')">
-                        <a href="index" class="active">
+                    <li sec:authorize="hasRole('admin')" class="active">
+                        <a href="index">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                             </span>
@@ -119,6 +121,17 @@
                             </span>
                             <span class="menu-text">
                                 个人中心
+                            </span>
+                        </a>
+                    </li>
+
+                    <li sec:authorize="hasRole('user')">
+                        <a href="add_borrow">
+                            <span class="icon-menu feather-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </span>
+                            <span class="menu-text">
+                                自助借阅
                             </span>
                         </a>
                     </li>
@@ -233,7 +246,7 @@
                                     </svg>
                                 </div>
                                 <div class="icon-info-text">
-                                    <h5 class="ad-title">Happy Customers</h5>
+                                    <h5 class="ad-title">Total Collection</h5>
                                     <h4 class="ad-card-title" th:text="'藏书数目 '+${bookcount}">藏书数目 15k</h4>
                                 </div>
                             </div>
@@ -322,8 +335,8 @@
                                     </svg>
                                 </div>
                                 <div class="icon-info-text">
-                                    <h5 class="ad-title">Happy Customers</h5>
-                                    <h4 class="ad-card-title" th:text="'待归还书目数 '+${StudentBookCounts}">待归还数 15k</h4>
+                                    <h5 class="ad-title">Amount to returned</h5>
+                                    <h4 class="ad-card-title" th:text="'待还书目数 '+${StudentBookCounts}">待归还数 15k</h4>
                                 </div>
                             </div>
                         </div>
@@ -336,7 +349,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 64 64"><g id="shopping-smartphone-home-house-hand"><path d="M60.02,25.05a2.971,2.971,0,0,0,1.84-1.54l.21-.41a3.022,3.022,0,0,0-1.14-3.91L33.54,2.76a2.988,2.988,0,0,0-3.08,0L3.07,19.19A3.022,3.022,0,0,0,1.93,23.1l.21.41a2.971,2.971,0,0,0,1.84,1.54,3.045,3.045,0,0,0,.84.12A3.033,3.033,0,0,0,6,24.9V56H5a3,3,0,0,0,0,6H59a3,3,0,0,0,0-6H58V24.91A2.928,2.928,0,0,0,60.02,25.05ZM59,58a1,1,0,0,1,0,2H5a1,1,0,0,1,0-2ZM46,37H56v9H41V29a1,1,0,0,1,2,0v5A3.009,3.009,0,0,0,46,37Zm0-2a1,1,0,0,1-1-1V29a2.98,2.98,0,0,0-4-2.82V23a3.009,3.009,0,0,0-3-3H26a3.009,3.009,0,0,0-3,3v7a3.009,3.009,0,0,0-3,3,2.974,2.974,0,0,0,.78,2,2.954,2.954,0,0,0,0,4,2.954,2.954,0,0,0,0,4A2.974,2.974,0,0,0,20,45a3.009,3.009,0,0,0,3,3v1a3.009,3.009,0,0,0,3,3H38a3.009,3.009,0,0,0,3-3V48H56v8H8V23.76L31.48,9.62a1.02,1.02,0,0,1,1.04,0L56,23.76V35ZM23,36h2a1,1,0,0,1,0,2H23a1,1,0,0,1,0-2Zm-1-3a1,1,0,0,1,1-1h2a1,1,0,0,1,0,2H23A1,1,0,0,1,22,33Zm1,7h2a1,1,0,0,1,0,2H23a1,1,0,0,1,0-2Zm0,4h2a1,1,0,0,1,0,2H23a1,1,0,0,1,0-2Zm2,4a3.009,3.009,0,0,0,3-3h8a1,1,0,0,0,1-1V34a1,1,0,0,0-1-1H35a3.99,3.99,0,0,0-7.58-1.75A2.956,2.956,0,0,0,25,30V23a1,1,0,0,1,1-1H38a1,1,0,0,1,1,1V49a1,1,0,0,1-1,1H26a1,1,0,0,1-1-1Zm2.22-9a2.954,2.954,0,0,0,0-4H35v8H27.22a2.954,2.954,0,0,0,0-4ZM29,33a2,2,0,0,1,4,0ZM33.55,7.91a2.979,2.979,0,0,0-3.1,0L5.34,23.03a1.018,1.018,0,0,1-.8.1.972.972,0,0,1-.61-.51l-.21-.41A1.021,1.021,0,0,1,4.1,20.9L31.49,4.47a1,1,0,0,1,1.02,0L59.9,20.9a1.021,1.021,0,0,1,.38,1.31l-.21.41a.972.972,0,0,1-.61.51,1.018,1.018,0,0,1-.8-.1Z"></path></g></svg>
                                 </div>
                                 <div class="icon-info-text">
-                                    <h5 class="ad-title">Daily Orders</h5>
+                                    <h5 class="ad-title">Total User</h5>
                                     <h4 class="ad-card-title" th:text="'在馆人数 '+${studentcount}">在馆人数 6k</h4>
                                 </div>
                             </div>
@@ -350,7 +363,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 64 64"><g id="hand_&#xB7;_ecommerce_&#xB7;_shopping_&#xB7;_online_&#xB7;_sale" data-name="hand &#xB7; ecommerce &#xB7; shopping &#xB7; online &#xB7; sale"><path d="M61,52H59V23a3.009,3.009,0,0,0-3-3H49V9a1,1,0,0,0-1-1H45a5.992,5.992,0,0,0-8.5-5.45A5.992,5.992,0,0,0,28,8H24a1,1,0,0,0-1,1V20H8a3.009,3.009,0,0,0-3,3V52H3a1,1,0,0,0-1,1v4a5,5,0,0,0,5,5H57a5,5,0,0,0,5-5V53A1,1,0,0,0,61,52ZM45,25V10h2V27a3.009,3.009,0,0,1-3,3H42.89A6.97,6.97,0,0,0,45,25ZM39,4a4,4,0,0,1,4,4H40a6.016,6.016,0,0,0-1.49-3.95A3.87,3.87,0,0,1,39,4Zm-2.5.9A3.976,3.976,0,0,1,38,8H35A3.976,3.976,0,0,1,36.5,4.9ZM34,4a3.87,3.87,0,0,1,.49.05A6.016,6.016,0,0,0,33,8H30A4,4,0,0,1,34,4Zm-9,6h3v2a1,1,0,0,0,0,2h2a1,1,0,0,0,0-2V10h8v2a1,1,0,0,0,0,2h2a1,1,0,0,0,0-2V10h3V25a5,5,0,0,1-5,5H30a5,5,0,0,1-5-5ZM23.08,26A7,7,0,0,0,30,32H44a5,5,0,0,0,5-5V26h4V48H11V46h5a1,1,0,0,0,1-1v-.14l.93.62a2.952,2.952,0,0,0,1.68.52H34.46a2.925,2.925,0,0,0,1.5-.4l13.4-7.73a3.006,3.006,0,0,0,1.1-4.1,3.011,3.011,0,0,0-4.1-1.1l-6.43,3.71A2.993,2.993,0,0,0,37,34H29.3l-.2-.13A10.972,10.972,0,0,0,17,33.8V33a1,1,0,0,0-1-1H11V26ZM11,44V34h4V44Zm20-4h6a2.982,2.982,0,0,0,1.98-.77l8.39-4.83a1.006,1.006,0,0,1,1.49.86.992.992,0,0,1-.5.87L34.95,43.87a.922.922,0,0,1-.49.13H19.61a1.023,1.023,0,0,1-.56-.17L17,42.46V36a.967.967,0,0,0,.55-.17l.46-.3a8.975,8.975,0,0,1,9.98,0l.46.3A.967.967,0,0,0,29,36h8a1,1,0,0,1,.71,1.7.01.01,0,0,0-.01.01A.991.991,0,0,1,37,38H31a1,1,0,0,0,0,2ZM7,23a1,1,0,0,1,1-1H23v2H10a1,1,0,0,0-1,1V49a1,1,0,0,0,1,1H54a1,1,0,0,0,1-1V25a1,1,0,0,0-1-1H49V22h7a1,1,0,0,1,1,1V52H7ZM36,54v1a1,1,0,0,1-1,1H29a1,1,0,0,1-1-1V54Zm24,3a3.009,3.009,0,0,1-3,3H7a3.009,3.009,0,0,1-3-3V54H26v1a3.009,3.009,0,0,0,3,3h6a3.009,3.009,0,0,0,3-3V54H60Z"></path><path d="M29.293,26.707a1,1,0,0,0,1.414,0l8-8a1,1,0,0,0-1.414-1.414l-8,8A1,1,0,0,0,29.293,26.707Z"></path><circle cx="30" cy="20" r="2"></circle><circle cx="38" cy="24" r="2"></circle></g></svg>
                                 </div>
                                 <div class="icon-info-text">
-                                    <h5 class="ad-title">Total Sales</h5>
+                                    <h5 class="ad-title">Avail Books</h5>
                                     <h4 class="ad-card-title" th:text="'可借书目 '+${availbookcount}">可借书目 10k</h4>
 
                                 </div>
@@ -499,11 +512,15 @@
                     </div>
                 </div>
                 <!-- User Books Borrow List Start -->
-                <div class="row"sec:authorize="hasRole('user')">
+                <div class="row" sec:authorize="hasRole('user')">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card chart-card">
                             <div class="card-header">
-                                <h4 class="has-btn">Books Borrow List</h4>
+                                <h4 class="has-btn">Books Borrow List
+                                    <span>
+                                        <a type="button" href="add_borrow" class="btn btn-primary squer-btn sm-btn">Add Borrow Info</a>
+                                    </span>
+                                </h4>
                             </div>
                             <div class="card-body pb-4">
                                 <div class="chart-holder">
