@@ -116,4 +116,9 @@ public class PageController {
         return "add_book";
     }
 
+    @RequestMapping("/profile")
+    public String profile(){
+        return "profile";
+    }
+
 }
