@@ -60,7 +60,8 @@
                             <div class="user-info-box">
                                 <div class="drop-down-header">
                                     <h4 th:text="${username}">John Brown</h4>
-                                    <p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>
+                                    <p sec:authorize="hasRole('admin')">图书管理员</p>
+                                    <p sec:authorize="hasRole('user')">在校学生</p>
                                 </div>
                                 <ul>
                                     <li>

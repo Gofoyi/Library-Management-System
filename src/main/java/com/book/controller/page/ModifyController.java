@@ -43,9 +43,9 @@ public class ModifyController {
                           @RequestParam("email") String email, HttpSession session
                          ){
         if(service.Modify(uid, name, sex, grade, email, session)) {
-            return "redirect:/index";
+            return "redirect:index";
         }
         else
-            return "redirect:/profile";
+            return "redirect:profile";
     }
 }

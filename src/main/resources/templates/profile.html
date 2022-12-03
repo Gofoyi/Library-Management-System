@@ -188,79 +188,91 @@
 							</div>
 						</div>
                         <div class="mb-3">
-                            <table class="table table-styled mb-0">
-                                <thead>
-                                <br>
-                                    <th>Uid</th>
-                                    <th>Sex</th>
-                                    <th>Grade</th>
-                                    <th>Email</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each = "student: ${list}">
-                                    </td>
-                                    <td th:text="${student.getUid()}">11</td>
-                                    <td th:text="${student.getSex()}">12</td>
-                                    <td th:text="${student.getGrade()}">13</td>
-                                    <td th:text="${student.getEmail()}">14</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <h6 class="mb-1" th:text="${uid}">SH</h6>
+                            <h7 class="mb-1" th:text="${sex}">SH</h7>
+                            <h8 class="mb-1" th:text="${grade}">SH</h8>
                         </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-xl-8">
-                  <form class="doModify" method="post" autocomplete="off">
-                    <div class="card-header">
-                      <h4 class="card-title mb-0">编辑我的个人信息</h4>
-                      <div class="card-options"><a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title=""><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title=""><i class="fe fe-x"></i></a></div>
+
+                    <!--以下为自动注入表单 -->
+        <div class="ad-auth-wrapper">
+            <div class="ad-auth-box">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="ad-auth-content"> <!--自动注入 -->
+                            <form action="doModify" method="post" autocomplete="off">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">编辑我的个人信息</h4>
+                                    <div class="card-options"><a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title=""><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title=""><i class="fe fe-x"></i></a></div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <p th:if="${modifyFailure}" style="color: red">修改失败!</p>
+
+                                        <div class="ad-auth-form"> <!--自动注入 -->
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                <label class="form-label">学号</label>
+                                                <input name="uid" type="text" placeholder="Uid" class="ad-input">
+                                                <p th:if="${uidFailure}" style="color: red">学号必须为11位数字！</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                <label class="form-label">姓名</label>
+                                                <input name="username" type="text" placeholder="Name" class="ad-input">
+                                                <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                <label class="form-label">性别</label>
+                                                <input name="sex" type="text" placeholder="Sex" class="ad-input">
+                                                <p th:if="${sexFailure}" style="color: red">性别必须输入男或女!</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                <label class="form-label">年级</label>
+                                                <input name="grade" type="text" placeholder="Grade" class="ad-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                <label class="form-label">邮箱</label>
+                                                <input name="email" type="text" placeholder="Email address" class="ad-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="ad-auth-btn">
+                                            <button class="ad-btn ad-modify">更新我的个人信息</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="card-body">
-                      <div class="row">
-                          <p th:if="${modifyFailure}" style="color: red">修改失败!</p>
-                        <div class="col-md-9">
-                          <div class="mb-3">
-                            <label class="form-label">学号</label>
-                              <input name="uid" type="text" placeholder="uid" class="ad-input">
-                              <p th:if="${uidFailure}" style="color: red">学号必须为11位数字！</p>
-                          </div>
-                        </div>
-                        <div class="col-sm-6 col-md-9">
-                          <div class="mb-3">
-                            <label class="form-label">姓名</label>
-                              <input name="username" type="text" placeholder="Name" class="ad-input">
-                              <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p>
-                          </div>
-                        </div>
-
-                        <div class="col-sm-6 col-md-4">
-                          <div class="mb-3">
-                            <label class="form-label">性别</label>
-                              <input name="sex" type="text" placeholder="Sex" class="ad-input">
-                              <p th:if="${sexFailure}" style="color: red">性别必须输入男或女!</p>
-                          </div>
-                        </div>
-
-                          <div class="col-sm-6 col-md-4">
-                              <div class="mb-3">
-                                  <label class="form-label">年级</label>
-                                  <input name="grade" type="text" placeholder="Grade" class="ad-input">
-                              </div>
-                          </div>
-
-                        <div class="col-sm-6 col-md-9">
-                          <div class="mb-3">
-                            <label class="form-label">邮箱</label>
-                              <input name="email" type="text" placeholder="Email address" class="ad-input">
-                          </div>
-                        </div>
-                      </div>
-					  <button class="btn btn-primary squer-btn" type="submit" data-bs-original-title="" title="">更新我的个人信息</button>
-                    </div>
-                  </form>
                 </div>
+            </div>
+        </div>
+
               </div>
 			  <div class="ad-footer-btm">
 					<p>Copyright &copy; 2021.Company name All rights reserved.<a target="_blank" href="https://sc.chinaz.com/moban/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></p>

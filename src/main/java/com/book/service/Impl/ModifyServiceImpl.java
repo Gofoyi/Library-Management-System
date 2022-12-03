@@ -12,9 +12,8 @@ public class ModifyServiceImpl implements ModifyService {
     @Resource
     AuthMapper mapper;
 
-    @Transactional
-    @Override
-    public boolean Modify(String uid, String name, String sex, String grade, String email, HttpSession session) {
+
+    boolean doModify(String uid, String name, String sex, String grade, String email, HttpSession session) {
         boolean flag = true;
 
         if (!uid.matches("^\\d{11}$")){
@@ -33,9 +32,17 @@ public class ModifyServiceImpl implements ModifyService {
             session.setAttribute("modifyFailure",true);
             flag = false;
         }
+        return flag;
+    }
+
+    @Transactional
+    @Override
+    public boolean Modify(String uid, String name, String sex, String grade, String email, HttpSession session) {
+        //数据存入数据库
+        boolean flag = doModify(uid, name, sex, grade, email, session);
         if (flag){
-            if (mapper.modifyStudentInfo(uid, name, sex,grade,email) <= 0){
-                throw new RuntimeException("修改-失败！");
+            if (mapper.modifyStudentInfo(uid, name, sex, grade, email)<=0){
+                throw new RuntimeException("信息修改失败");
             }
         }
         return flag;
