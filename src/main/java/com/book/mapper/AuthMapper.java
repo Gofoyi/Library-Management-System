@@ -25,16 +25,16 @@ public interface AuthMapper {
     String getUidByUsername(String username);
 
     //注册用户，插入一条用户信息
-    @Insert("insert into user(uid, username, role, password) values(#{uid}, #{username}, #{role}, #{password})")
-    int registerUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password);
+    @Insert("insert into user(username, role, password) values(#{username}, #{role}, #{password})")
+    int registerUser( @Param("username")String username, @Param("role")String role, @Param("password")String password);
 
     //注册用户，插入一条带有邮箱的用户信息
-    @Insert("insert into user(uid, username, role, password,email) values(#{uid}, #{username}, #{role}, #{password}, #{email})")
-    int registerEmailedUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
+    @Insert("insert into user(username, role, password,email) values(#{username}, #{role}, #{password}, #{email})")
+    int registerEmailedUser(@Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
 
     //注册用户，插入一条学生信息
-    @Insert("insert into student(uid, name, grade, sex) values(#{uid}, #{name}, #{grade}, #{sex})")
-    int addStudentInfo(@Param("uid") String uid, @Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);
+    @Insert("insert into student(name) values(#{name})")
+    int addStudentInfo(@Param("name")String name);
 
     //@Insert("insert into student(uid, name, grade, sex) values(#{uid}, #{name}, #{grade}, #{sex})")
     //int modifyStudentInfo(@Param("uid") String uid, @Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);
