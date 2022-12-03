@@ -118,6 +118,9 @@ public class PageController {
 
     @RequestMapping("/profile")
     public String profile(){
+
+
+
         return "profile";
     }
 

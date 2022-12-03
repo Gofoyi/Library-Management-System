@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div class="header-controls">
-                        <div class="setting-wrapper header-links">
+                        <div class="user-info-wrapper header-links">
                             <a href="javascript:void(0);" class="user-info">
                                 <img src="static/picture/user.jpg" alt="" class = "user-img">
                                 <div class="blink-animation">
@@ -60,7 +60,9 @@
                             <div class="user-info-box">
                                 <div class="drop-down-header">
                                     <h4 th:text="${username}">John Brown</h4>
-                                    <p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>
+                                    <!--<p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>-->
+                                    <p sec:authorize="hasRole('admin')">图书管理员</p>
+                                    <p sec:authorize="hasRole('user')">在校学生</p>
                                 </div>
                                 <ul>
                                     <li>
@@ -111,9 +113,28 @@
                             </span>
                         </a>
                     </li>
-
+                    <li sec:authorize="hasRole('user')">
+                        <a href="index">
+                            <span class="icon-menu feather-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </span>
+                            <span class="menu-text">
+                                个人中心
+                            </span>
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('user')" >
+                        <a href="add_borrow">
+                            <span class="icon-menu feather-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            </span>
+                            <span class="menu-text">
+                                自助借阅
+                            </span>
+                        </a>
+                    </li>
                     <li>
-                        <a href="proflie">
+                        <a href="profile">
                             <span class="icon-menu feather-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                             </span>
@@ -155,24 +176,38 @@
                       <div class="card-options"><a class="card-options-collapse" href="javascript:;" data-bs-toggle="card-collapse" data-bs-original-title="" title=""><i class="fe fe-chevron-up"></i></a><a class="card-options-remove" href="javascript:;" data-bs-toggle="card-remove" data-bs-original-title="" title=""><i class="fe fe-x"></i></a></div>
                     </div>
                     <div class="card-body">
-                      <form>
 						<div class="profile-title">
 							<div class="media ad-profile2-img">                        
 								<img alt="" src="static/picture/user.jpg">
 							  <div class="media-body">
 								<h5 class="mb-1" th:text="${username}">SH</h5>
-								<p th:text="${role.equals('ROLE_user')?'在校学生':'图书管理员'}">管理员/学生</p>
+                                  <!--<p th:text="${role.equals('ROLE_user') ? '在校学生':'图书管理员'}">UI | UX Designer</p>-->
+                                  <p sec:authorize="hasRole('admin')">图书管理员</p>
+                                  <p sec:authorize="hasRole('user')">在校学生</p>
 							  </div>
 							</div>
 						</div>
                         <div class="mb-3">
-                            <label class="form-label" th:text="${uid}">学号</label><br/>
-                            <label class="form-label" th:text="${sex}">性别</label><br/>
-                            <label class="form-label" th:text="${grade}">年级</label><br/>
-                            <label class="form-label" th:text="${email}"></label><br/>
+                            <table class="table table-styled mb-0">
+                                <thead>
+                                <br>
+                                    <th>Uid</th>
+                                    <th>Sex</th>
+                                    <th>Grade</th>
+                                    <th>Email</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each = "student: ${list}">
+                                    </td>
+                                    <td th:text="${student.getUid()}">11</td>
+                                    <td th:text="${student.getSex()}">12</td>
+                                    <td th:text="${student.getGrade()}">13</td>
+                                    <td th:text="${student.getEmail()}">14</td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        
-                      </form>
                     </div>
                   </div>
                 </div>

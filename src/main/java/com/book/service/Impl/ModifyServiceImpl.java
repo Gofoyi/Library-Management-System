@@ -34,8 +34,8 @@ public class ModifyServiceImpl implements ModifyService {
             flag = false;
         }
         if (flag){
-            if (mapper.modifyStudentInfo(uid, name, sex,grade) <= 0){
-                throw new RuntimeException("修改失败！");
+            if (mapper.modifyStudentInfo(uid, name, sex,grade,email) <= 0){
+                throw new RuntimeException("修改-失败！");
             }
         }
         return flag;
