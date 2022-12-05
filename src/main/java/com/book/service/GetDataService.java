@@ -30,4 +30,14 @@ public interface GetDataService {
     List<Student> getStudentListByName(String name);
 
     int getStudentBookCounts(String username);
+
+    String getStudentSexByName(String name);
+
+    String getGradeByName(String name);
+
+    String getEmailByUserName(String username);
+
+
+
+
 }

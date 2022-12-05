@@ -57,7 +57,9 @@ public class GetDataServiceImpl implements GetDataService {
         return list;
     }
 
-    public String getUidByUsername(String username){return authMapper.getUidByUsername(username);}
+    public String getUidByUsername(String username){
+        return authMapper.getUidByUsername(username);
+    }
 
     @Override
     public int getStudentCounts() {
@@ -88,5 +90,23 @@ public class GetDataServiceImpl implements GetDataService {
     public int getStudentBookCounts(String username) {
         return mapper.getStudentBookCounts(authMapper.getUidByUsername(username));
     }
+
+    @Override
+    public String getStudentSexByName(String name) {
+        return authMapper.getStudentSexByName(name);
+    }
+
+    @Override
+    public String getGradeByName(String name) {
+        return  authMapper.getGradeByName(name);
+    }
+
+    @Override
+    public String getEmailByUserName(String username) {
+        return authMapper.getEmailByUsername(username);
+    }
+
+
+
 
 }
