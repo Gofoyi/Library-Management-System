@@ -38,6 +38,6 @@ public interface GetDataService {
 
     String getEmailByUserName(String username);
 
-    boolean ModifyService(String name, String sex, String grade, String email, String username, HttpSession session);
+    boolean ModifyService(String name, String sex, String grade, String email,String uid,String unChangeUsername, HttpSession session);
 
 }

@@ -155,10 +155,8 @@ public class PageController {
         Authentication authentication = context.getAuthentication();
         User user = (User) authentication.getPrincipal();
         String unChangeUsername = user.getUsername();
-        String uid = getDataService.getUidByUsername(unChangeUsername);
-        getDataService.ModifyService(username,sex,grade,email,uid,session);
+        String uid = getDataService.getUidByUsername(unChangeUsername); //根据username获取uid
+        getDataService.ModifyService(username,sex,grade,email,uid,unChangeUsername,session);    //信息传入ModifyService
         return "profile";
     }
-
-
 }

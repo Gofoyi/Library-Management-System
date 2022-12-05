@@ -133,12 +133,11 @@ public class GetDataServiceImpl implements GetDataService {
 
     @Transactional
     @Override
-    public boolean ModifyService(String name, String sex, String grade, String email, String username, HttpSession session) {
-
+    public boolean ModifyService(String name, String sex, String grade, String email,String uid,String unChangeUsername, HttpSession session) {
+                                    //从PageController获取参数
 
         boolean flag = doModify(name, sex,session);
         if (flag){
-            String uid = authMapper.getUidByUsername(username);     //根据username获取uid
             if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
                 throw new RuntimeException("user信息修改失败");
             }
@@ -147,10 +146,6 @@ public class GetDataServiceImpl implements GetDataService {
             }
         }
         return flag;
-
-
-
-
     }
 
 }
