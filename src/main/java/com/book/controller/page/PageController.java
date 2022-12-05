@@ -4,9 +4,7 @@ package com.book.controller.page;
 import com.book.entity.Book;
 import com.book.entity.Pages;
 import com.book.entity.Student;
-import com.book.service.AddInfoService;
 import com.book.service.GetDataService;
-import com.book.service.ModifyService;
 import com.book.service.SepPageService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -27,9 +25,6 @@ public class PageController {
 
     @Resource
     SepPageService pageService;
-
-    @Resource
-    ModifyService service;
 
     @ModelAttribute(value = "role")
     public String role(@SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context){
@@ -156,11 +151,12 @@ public class PageController {
                          @RequestParam("grade") String grade,
                          @RequestParam("email") String email, String username,HttpSession session
     ){
-        if(service.Modify(name, sex, grade,email,username,session)) {
+        if(getDataService.ModifyService(name, sex, grade,email,username,session)) {
             return "redirect:index";
         }
         else
             return "redirect:profile";
     }
+
 
 }

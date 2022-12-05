@@ -8,8 +8,10 @@ import com.book.mapper.AuthMapper;
 import com.book.mapper.BookMapper;
 import com.book.service.GetDataService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 @Service
 public class GetDataServiceImpl implements GetDataService {
@@ -106,7 +108,40 @@ public class GetDataServiceImpl implements GetDataService {
         return authMapper.getEmailByUsername(username);
     }
 
+    boolean doModify(String name, String sex, HttpSession session) { //信息验证
+        boolean flag = true;
 
+        if (!name.matches("^[\\u4e00-\\u9fa5]*$")){
+            session.setAttribute("nameFailure",true);
+            flag = false;
+        }
+        if (sex.equals("男")){} else if (sex.equals("女")){} else {
+            session.setAttribute("sexFailure",true);
+            flag = false;
+        }
+        if (!name.equals("") && authMapper.existUsername(name)!=null){
+            session.setAttribute("modifyFailure",true);
+            flag = false;
+        }
+        return flag;
+    }
 
+    @Transactional
+    @Override
+    public boolean ModifyService(String name, String sex, String grade, String email, String username, HttpSession session) {
+
+        boolean flag = doModify(name, sex,session);
+        if (flag){
+            String uid = authMapper.getUidByUsername(username);     //根据username获取uid
+            authMapper.modifyUserInfo(uid,name,email);
+            if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
+                throw new RuntimeException("user信息修改失败");
+            }
+            if (authMapper.modifyStudentInfo(uid,name,grade,sex)<=0){       //数据存入student表
+                throw new RuntimeException("student信息修改失败");
+            }
+        }
+        return flag;
+    }
 
 }

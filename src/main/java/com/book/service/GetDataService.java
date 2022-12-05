@@ -4,6 +4,7 @@ package com.book.service;
 import com.book.entity.Book;
 import com.book.entity.Student;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface GetDataService {
@@ -37,7 +38,6 @@ public interface GetDataService {
 
     String getEmailByUserName(String username);
 
-
-
+    boolean ModifyService(String name, String sex, String grade, String email, String username, HttpSession session);
 
 }
