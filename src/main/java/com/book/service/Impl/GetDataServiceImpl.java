@@ -1,6 +1,7 @@
 package com.book.service.Impl;
 
 
+import com.book.controller.page.PageController;
 import com.book.entity.Book;
 import com.book.entity.Borrow;
 import com.book.entity.Student;
@@ -9,6 +10,7 @@ import com.book.mapper.BookMapper;
 import com.book.service.GetDataService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -21,6 +23,9 @@ public class GetDataServiceImpl implements GetDataService {
 
     @Resource
     AuthMapper authMapper;
+
+    @Resource
+    PageController pageController;
 
     public List<Book> getBookListByTitle(String title){
         return mapper.getBookListByTitle(title);
@@ -130,10 +135,10 @@ public class GetDataServiceImpl implements GetDataService {
     @Override
     public boolean ModifyService(String name, String sex, String grade, String email, String username, HttpSession session) {
 
+
         boolean flag = doModify(name, sex,session);
         if (flag){
             String uid = authMapper.getUidByUsername(username);     //根据username获取uid
-            authMapper.modifyUserInfo(uid,name,email);
             if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
                 throw new RuntimeException("user信息修改失败");
             }
@@ -142,6 +147,10 @@ public class GetDataServiceImpl implements GetDataService {
             }
         }
         return flag;
+
+
+
+
     }
 
 }

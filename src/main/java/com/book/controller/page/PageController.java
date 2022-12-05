@@ -128,6 +128,7 @@ public class PageController {
     public String addBook(){
         return "add_book";
     }
+
     @RequestMapping("/profile")
     public String modify(HttpSession session, Model model){
         if (session.getAttribute("modifyFailure")!=null){
@@ -146,16 +147,17 @@ public class PageController {
     }
 
     @RequestMapping(value = "/doModify",method = RequestMethod.POST)
-    public String modify(@RequestParam("username") String name,
+    public String modify(@RequestParam("username_changed") String changeUsername,
                          @RequestParam("sex") String sex,
                          @RequestParam("grade") String grade,
-                         @RequestParam("email") String email, String username,HttpSession session
-    ){
-        if(getDataService.ModifyService(name, sex, grade,email,username,session)) {
-            return "redirect:index";
-        }
-        else
-            return "redirect:profile";
+                         @RequestParam("email") String email,
+                         @SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context,HttpSession session){
+        Authentication authentication = context.getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        String unChangeUsername = user.getUsername();
+        String uid = getDataService.getUidByUsername(unChangeUsername);
+        getDataService.ModifyService(changeUsername,sex,grade,email,uid,session);
+        return "profile";
     }
 
 

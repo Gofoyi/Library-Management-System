@@ -188,10 +188,10 @@
 							</div>
 						</div>
                         <div class="mb-3">
-                            <h6 class="mb-1" th:text="${uid}">SH</h6>
-                            <p th:text="${sex}">SH</p>  <!--不知道为什么不显示--><!--12.4.23.10已解决-->
-                            <p th:text="${grade}"></p>
-                            <p th:text="${email}"></p>
+                            <h6  th:text="${uid}">SH</h6>
+                            <p 性别 th:text="${sex}">SH</p>  <!--不知道为什么不显示--><!--12.4.23.10已解决-->
+                            <p 年级 th:text="${grade}"></p>
+                            <p 邮箱 th:text="${email}"></p>
                         </div>
                     </div>
                   </div>
@@ -217,7 +217,7 @@
                                                 <div class="col-sm-6 col-md-12">
                                                     <div class="mb-3">
                                                 <label class="form-label">姓名</label>
-                                                <input name="username" type="text" placeholder="Name" class="ad-input">
+                                                <input name="username_changed" type="text" placeholder="Name" class="ad-input">
                                                 <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p>
                                                     </div>
                                                 </div>

@@ -51,11 +51,11 @@ public interface AuthMapper {
     int addStudentInfo(@Param("uid") String uid, @Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);
 
     //修改用户信息
-    @Update("update student set username = #{name} ,email = #{email} where uid = #{uid}")
-    int modifyUserInfo( @Param("uid")String uid,@Param("username") String username,@Param("email")String email);
+    @Update("update user set username = #{username} ,email = #{email} where uid = #{uid}")
+    int modifyUserInfo(@Param("username") String username,@Param("email")String email,@Param("uid")String uid);
 
     @Update("update student set name = #{name}, sex = #{sex}, grade = #{grade} where uid = #{uid}")
-    int modifyStudentInfo(@P("uid")String uid,@Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);
+    int modifyStudentInfo(@Param("name")String name, @Param("sex")String sex,@Param("grade")String grade,@P("uid")String uid);
 
     //@Update("update student set (uid,name,grade,sex) = ('${uid}, ${name}, ${grade}, ${sex}) where uid = '${uid}'")
     //int modifyStudentInfo(@Param("uid")String uid,@Param("name")String name,@Param("sex")String sex, @Param("grade")String grade);
