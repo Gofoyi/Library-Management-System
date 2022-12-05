@@ -147,7 +147,7 @@ public class PageController {
     }
 
     @RequestMapping(value = "/doModify",method = RequestMethod.POST)
-    public String modify(@RequestParam("username_changed") String changeUsername,
+    public String modify(@RequestParam("username") String username,
                          @RequestParam("sex") String sex,
                          @RequestParam("grade") String grade,
                          @RequestParam("email") String email,
@@ -156,7 +156,7 @@ public class PageController {
         User user = (User) authentication.getPrincipal();
         String unChangeUsername = user.getUsername();
         String uid = getDataService.getUidByUsername(unChangeUsername);
-        getDataService.ModifyService(changeUsername,sex,grade,email,uid,session);
+        getDataService.ModifyService(username,sex,grade,email,uid,session);
         return "profile";
     }
 
