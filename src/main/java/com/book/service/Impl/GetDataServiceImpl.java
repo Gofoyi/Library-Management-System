@@ -134,16 +134,17 @@ public class GetDataServiceImpl implements GetDataService {
     @Transactional
     @Override
     public boolean ModifyService(String name, String sex, String grade, String email,String uid,String unChangeUsername, HttpSession session) {
-                                    //从PageController获取参数
-
+        //从PageController获取参数
         boolean flag = doModify(name, sex,session);
         if (flag){
-            if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
-                throw new RuntimeException("user信息修改失败");
-            }
-            if (authMapper.modifyStudentInfo(uid,name,grade,sex)<=0){       //数据存入student表
-                throw new RuntimeException("student信息修改失败");
-            }
+            authMapper.modifyUserInfo(name,email,uid);
+            authMapper.modifyStudentInfo(uid,name,sex,grade);
+//            if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
+//                throw new RuntimeException("user信息修改失败");
+//            }
+//            if (authMapper.modifyStudentInfo(uid,name,grade,sex)<=0){       //数据存入student表
+//                throw new RuntimeException("student信息修改失败");
+//            }
         }
         return flag;
     }

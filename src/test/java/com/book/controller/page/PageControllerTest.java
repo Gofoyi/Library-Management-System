@@ -107,5 +107,15 @@ class PageControllerTest {
                 .andReturn();
     }
 
+    @Test
+    @DisplayName("9-Profile页面测试")
+    @WithMockUser(username = "张四",password = "123456",roles = {"user"})
+    void profile() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/profile"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
 
 }
