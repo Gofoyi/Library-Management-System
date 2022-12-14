@@ -23,12 +23,8 @@ public class AddController {
     }
 
     @RequestMapping(value = "/add-borrow",method = RequestMethod.POST)
-    public String addBorrow(@RequestParam("bid") int bid, @RequestParam("uid") String uid, HttpServletResponse resp) throws IOException {
-        if (service.addBorrowInfo(bid, uid) == 1) {
-            resp.getWriter().write("<script>alert('添加成功！');</script>");
-        } else {
-            resp.getWriter().write("<script>alert('添加失败，请重试！');</script>");
-        }
+    public String addBorrow(@RequestParam("bid") int bid, @RequestParam("uid") String uid) {
+        service.addBorrowInfo(bid, uid);
         return "redirect:/index";
     }
 }
