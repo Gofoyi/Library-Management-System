@@ -4,6 +4,7 @@ package com.book.service;
 import com.book.entity.Book;
 import com.book.entity.Student;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface GetDataService {
@@ -30,4 +31,13 @@ public interface GetDataService {
     List<Student> getStudentListByName(String name);
 
     int getStudentBookCounts(String username);
+
+    String getStudentSexByName(String name);
+
+    String getGradeByName(String name);
+
+    String getEmailByUserName(String username);
+
+    boolean ModifyService(String name, String sex, String grade, String email,String uid,String unChangeUsername, HttpSession session);
+
 }

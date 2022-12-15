@@ -22,7 +22,7 @@ public class RegisterServiceImpl implements RegisterService {
 
 
 
-    boolean doDataVerify(String uid, String name,String password, HttpSession session){
+    boolean doDataVerify(String name, String password, HttpSession session){
         //数据校验
         boolean flag = true;
         //对密码进行校验，检查密码必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-18之间!
@@ -31,10 +31,6 @@ public class RegisterServiceImpl implements RegisterService {
             flag = false;
         }
 
-        if (!uid.matches("^\\d{11}$")){
-            session.setAttribute("uidFailure",true);
-            flag = false;
-        }
         if (!name.matches("^[\\u4e00-\\u9fa5]*$")){
             session.setAttribute("nameFailure",true);
             flag = false;
@@ -48,15 +44,15 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Transactional
     @Override
-    public boolean register(String uid, String name,String password, HttpSession session) {
-        boolean flag = doDataVerify(uid, name,password, session);
+    public boolean register(String name, String password, HttpSession session) {
+        boolean flag = doDataVerify( name,password, session);
         if (flag){
             //把数据存到数据库里
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            if (mapper.registerUser(uid, name, "user", encoder.encode(password)) <=0 ){
+            if (mapper.registerUser( name, "user", encoder.encode(password)) <=0 ){
                 throw new RuntimeException("User注册失败！");
             }
-            if (mapper.addStudentInfo(uid, name) <= 0){
+            if (mapper.addStudentInfo(name) <= 0){
                 throw new RuntimeException("Student注册失败！");
             }
         }
@@ -64,20 +60,18 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public boolean doEmailRegister(String uid, String name,String password, String email, String code, HttpSession session) {
-        boolean flag = doDataVerify(uid, name,password, session);
+    public boolean doEmailRegister(String name,String password, String email, String code, HttpSession session) {
+        boolean flag = doDataVerify(name,password, session);
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         //单独验证邮箱
         if (flag && service.doEmailVerify(email, code)){
-            if (mapper.registerEmailedUser(uid, name, "user", encoder.encode(password),email) <=0 ){
+            if (mapper.registerEmailedUser(name, "user", encoder.encode(password),email) <=0 ){
                 throw new RuntimeException("User注册失败！");
             }
-            if (mapper.addStudentInfo(uid, name) <= 0){
+            if (mapper.addStudentInfo(name) <= 0){
                 throw new RuntimeException("Student注册失败！");
             }
         }
         return flag && service.doEmailVerify(email, code);
     }
-
-
 }

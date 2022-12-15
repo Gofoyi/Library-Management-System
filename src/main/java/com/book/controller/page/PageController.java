@@ -4,7 +4,6 @@ package com.book.controller.page;
 import com.book.entity.Book;
 import com.book.entity.Pages;
 import com.book.entity.Student;
-import com.book.service.AddInfoService;
 import com.book.service.GetDataService;
 import com.book.service.SepPageService;
 import org.springframework.security.core.Authentication;
@@ -12,10 +11,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -49,6 +45,23 @@ public class PageController {
         return String.valueOf(getDataService.getUidByUsername(user.getUsername()));
     }
 
+    @ModelAttribute(value = "sex")
+    public String sex(@SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context){
+        User user = (User) context.getAuthentication().getPrincipal();
+        return String.valueOf(getDataService.getStudentSexByName(user.getUsername()));
+    }
+
+    @ModelAttribute(value = "grade")
+    public String grade(@SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context){
+        User user = (User) context.getAuthentication().getPrincipal();
+        return String.valueOf(getDataService.getGradeByName(user.getUsername()));
+    }
+
+    @ModelAttribute(value = "email")
+    public String email(@SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context){
+        User user = (User) context.getAuthentication().getPrincipal();
+        return String.valueOf(getDataService.getEmailByUserName(user.getUsername()));
+    }
 
     @RequestMapping("index")
     public String index(@RequestParam(value = "PageNum", defaultValue = "1") int PageNum, Model model, HttpSession session){
@@ -116,4 +129,34 @@ public class PageController {
         return "add_book";
     }
 
+    @RequestMapping("/profile")
+    public String modify(HttpSession session, Model model){
+        if (session.getAttribute("modifyFailure")!=null){
+            model.addAttribute("registerFailure",session.getAttribute("modifyFailure"));
+            session.removeAttribute("modifyFailure");
+        }
+        if (session.getAttribute("nameFailure")!=null){
+            model.addAttribute("nameFailure",session.getAttribute("nameFailure"));
+            session.removeAttribute("nameFailure");
+        }
+        if (session.getAttribute("sexFailure")!=null){
+            model.addAttribute("uidFailure",session.getAttribute("sexFailure"));
+            session.removeAttribute("sexFailure");
+        }
+        return "profile";
+    }
+
+    @RequestMapping(value = "/doModify",method = RequestMethod.POST)
+    public String modify(@RequestParam("username") String username,
+                         @RequestParam("sex") String sex,
+                         @RequestParam("grade") String grade,
+                         @RequestParam("email") String email,
+                         @SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context,HttpSession session){
+        Authentication authentication = context.getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        String unChangeUsername = user.getUsername();
+        String uid = getDataService.getUidByUsername(unChangeUsername); //根据username获取uid
+        getDataService.ModifyService(username,sex,grade,email,uid,unChangeUsername,session);    //信息传入ModifyService
+        return "profile";
+    }
 }

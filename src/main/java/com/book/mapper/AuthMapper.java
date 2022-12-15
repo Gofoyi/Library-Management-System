@@ -2,6 +2,8 @@ package com.book.mapper;
 
 import com.book.entity.Student;
 import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -24,17 +26,39 @@ public interface AuthMapper {
     @Select("Select uid from user where username = #{username}")
     String getUidByUsername(String username);
 
+    //根据name查询sex
+    @Select("Select sex from student where name = #{name}")
+    String getStudentSexByName(String name);
+
+    //根据name查询grade
+    @Select("Select grade from student where name = #{name}")
+    String getGradeByName(String name);
+
+    //根据username查询email
+    @Select("Select email from user where username = #{username}")
+    String getEmailByUsername(String name);
+
     //注册用户，插入一条用户信息
-    @Insert("insert into user(uid, username, role, password) values(#{uid}, #{username}, #{role}, #{password})")
-    int registerUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password);
+    @Insert("insert into user(username, role, password) values(#{username}, #{role}, #{password})")
+    int registerUser( @Param("username")String username, @Param("role")String role, @Param("password")String password);
 
     //注册用户，插入一条带有邮箱的用户信息
-    @Insert("insert into user(uid, username, role, password,email) values(#{uid}, #{username}, #{role}, #{password}, #{email})")
-    int registerEmailedUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
+    @Insert("insert into user(username, role, password,email) values(#{username}, #{role}, #{password}, #{email})")
+    int registerEmailedUser(@Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
 
     //注册用户，插入一条学生信息
-    @Insert("insert into student(uid, name) values(#{uid}, #{name})")
-    int addStudentInfo(@Param("uid") String uid, @Param("name")String name);
+    @Insert("insert into student(name) values(#{name})")
+    int addStudentInfo(@Param("name")String name);
+
+    //修改用户信息
+    @Update("update user set username = #{username} ,email = #{email} where uid = #{uid}")
+    int modifyUserInfo(@Param("username") String username,@Param("email")String email,@Param("uid")String uid);
+
+    @Update("update student set name = #{name}, sex = #{sex}, grade = #{grade} where uid = #{uid}")
+    int modifyStudentInfo(@Param("uid") String uid,@Param("name")String name, @Param("sex")String sex,@Param("grade")String grade);
+
+    //@Update("update student set (uid,name,grade,sex) = ('${uid}, ${name}, ${grade}, ${sex}) where uid = '${uid}'")
+    //int modifyStudentInfo(@Param("uid")String uid,@Param("name")String name,@Param("sex")String sex, @Param("grade")String grade);
 
     //获得所有学生列表
     @Select("Select * from student")
