@@ -33,8 +33,8 @@ public interface AuthMapper {
     int registerEmailedUser(@Param("uid") String uid, @Param("username")String username, @Param("role")String role, @Param("password")String password, @Param("email")String email);
 
     //注册用户，插入一条学生信息
-    @Insert("insert into student(uid, name, grade, sex) values(#{uid}, #{name}, #{grade}, #{sex})")
-    int addStudentInfo(@Param("uid") String uid, @Param("name")String name, @Param("grade")String grade, @Param("sex")String sex);
+    @Insert("insert into student(uid, name) values(#{uid}, #{name})")
+    int addStudentInfo(@Param("uid") String uid, @Param("name")String name);
 
     //获得所有学生列表
     @Select("Select * from student")

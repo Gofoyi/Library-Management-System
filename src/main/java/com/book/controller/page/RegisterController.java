@@ -44,13 +44,11 @@ public class RegisterController {
     @RequestMapping(value = "/doRegister", method = RequestMethod.POST)
     public String register(@RequestParam("uid") String uid,
                            @RequestParam("username") String name,
-                           @RequestParam("sex") String sex,
-                           @RequestParam("grade") String grade,
                            @RequestParam("password") String password,
                            @RequestParam("email") String email,
                            @RequestParam("verify_code") String code,
                            HttpSession session){
-            if(service.doEmailRegister(uid, name, sex, grade, password, email, code, session)) {
+            if(service.doEmailRegister(uid, name,password, email, code, session)) {
                 return "redirect:login";
             }
             else
