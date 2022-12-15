@@ -2,6 +2,7 @@ package com.book.config;
 
 import com.book.mapper.AuthMapper;
 import com.book.service.Impl.UserAuthService;
+import com.book.service.RegisterService;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,6 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource
     DataSource dataSource;
+
+    @Resource
+    RegisterService registerService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -69,7 +73,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         HttpSession session = httpServletRequest.getSession();
         session.setAttribute("username", authentication.getName());
         session.setAttribute("role", mapper.getRoleByUsername(authentication.getName()));
-        httpServletResponse.sendRedirect("index");
+
+        if(registerService.isFillInfo(authentication.getName())){
+            httpServletResponse.sendRedirect("profile");
+        }
+        else {
+            httpServletResponse.sendRedirect("index");
+        }
     }
 
     private void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException {
