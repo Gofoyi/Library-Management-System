@@ -218,7 +218,7 @@
                                                     <div class="mb-3">
                                                 <label class="form-label">姓名</label>
                                                 <input name="username" type="text" placeholder="Name" class="ad-input">
-                                                <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p>
+                                                <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p> <!--错误提示-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,6 +247,15 @@
                                                     <div class="mb-3">
                                                 <label class="form-label">邮箱</label>
                                                 <input name="email" type="text" placeholder="Email address" class="ad-input">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="ad-auth-feilds">
+                                                <div class="col-sm-6 col-md-12">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">密码</label>
+                                                        <input name="password" type="text" placeholder="Password" class="ad-input">
                                                     </div>
                                                 </div>
                                             </div>

@@ -129,10 +129,10 @@ public class PageController {
         return "add_book";
     }
 
-    @RequestMapping("/profile")
+    @RequestMapping("profile") //信息校验
     public String modify(HttpSession session, Model model){
         if (session.getAttribute("modifyFailure")!=null){
-            model.addAttribute("registerFailure",session.getAttribute("modifyFailure"));
+            model.addAttribute("modifyFailure",session.getAttribute("modifyFailure"));
             session.removeAttribute("modifyFailure");
         }
         if (session.getAttribute("nameFailure")!=null){
@@ -140,8 +140,12 @@ public class PageController {
             session.removeAttribute("nameFailure");
         }
         if (session.getAttribute("sexFailure")!=null){
-            model.addAttribute("uidFailure",session.getAttribute("sexFailure"));
+            model.addAttribute("sexFailure",session.getAttribute("sexFailure"));
             session.removeAttribute("sexFailure");
+        }
+        if (session.getAttribute("passwordFailure")!=null) {
+            model.addAttribute("passwordFailure",session.getAttribute("passwordFailure"));
+            session.removeAttribute("passwordFailure");
         }
         return "profile";
     }
@@ -151,12 +155,13 @@ public class PageController {
                          @RequestParam("sex") String sex,
                          @RequestParam("grade") String grade,
                          @RequestParam("email") String email,
+                         @RequestParam("password") String password,
                          @SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context,HttpSession session){
         Authentication authentication = context.getAuthentication();
         User user = (User) authentication.getPrincipal();
         String unChangeUsername = user.getUsername();
         String uid = getDataService.getUidByUsername(unChangeUsername); //根据username获取uid
-        getDataService.ModifyService(username,sex,grade,email,uid,unChangeUsername,session);    //信息传入ModifyService
+        getDataService.ModifyService(username,sex,grade,email,uid,unChangeUsername,password,session);    //信息传入ModifyService
         return "profile";
     }
 }

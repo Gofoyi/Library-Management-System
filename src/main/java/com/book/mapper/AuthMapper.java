@@ -57,6 +57,24 @@ public interface AuthMapper {
     @Update("update student set name = #{name}, sex = #{sex}, grade = #{grade} where uid = #{uid}")
     int modifyStudentInfo(@Param("uid") String uid,@Param("name")String name, @Param("sex")String sex,@Param("grade")String grade);
 
+    //单独修改
+    @Update("update user set username = #{username} where uid = #{uid}")
+    int modifyUsernameInfo(@Param("username")String username,@Param("uid")String uid);
+
+    @Update("update user set email = #{email} where uid = #{uid}")
+    int modifyEmailInfo(@Param("email")String email,@Param("uid")String uid);
+
+    @Update("update student set sex = #{sex} where uid = #{uid}")
+    int modifySexInfo(@Param("sex")String sex,@Param("uid")String uid);
+
+    @Update("update student set grade = #{grade} where uid = #{uid}")
+    int modifyGradeInfo(@Param("grade")String grade,@Param("uid")String uid);
+
+    //单独修改密码
+    @Update("update user set password = #{password} where uid = #{uid}")
+    int modifyPasswordInfo(@Param("password")String password,@Param("uid")String uid);
+
+
     //@Update("update student set (uid,name,grade,sex) = ('${uid}, ${name}, ${grade}, ${sex}) where uid = '${uid}'")
     //int modifyStudentInfo(@Param("uid")String uid,@Param("name")String name,@Param("sex")String sex, @Param("grade")String grade);
 

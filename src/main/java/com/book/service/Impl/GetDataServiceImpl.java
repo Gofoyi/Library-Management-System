@@ -1,7 +1,6 @@
 package com.book.service.Impl;
 
 
-import com.book.controller.page.PageController;
 import com.book.entity.Book;
 import com.book.entity.Borrow;
 import com.book.entity.Student;
@@ -10,7 +9,6 @@ import com.book.mapper.BookMapper;
 import com.book.service.GetDataService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -25,7 +23,7 @@ public class GetDataServiceImpl implements GetDataService {
     AuthMapper authMapper;
 
     @Resource
-    PageController pageController;
+    GetDataService service;
 
     public List<Book> getBookListByTitle(String title){
         return mapper.getBookListByTitle(title);
@@ -113,19 +111,23 @@ public class GetDataServiceImpl implements GetDataService {
         return authMapper.getEmailByUsername(username);
     }
 
-    boolean doModify(String name, String sex, HttpSession session) { //信息验证
+    boolean doModify(String name, String sex,String password, HttpSession session) { //信息验证
         boolean flag = true;
 
         if (!name.matches("^[\\u4e00-\\u9fa5]*$")){
             session.setAttribute("nameFailure",true);
             flag = false;
         }
-        if (sex.equals("男")){} else if (sex.equals("女")){} else {
+        if (sex.equals("男")){} else if (sex.equals("女")){} else if (sex.equals(" ")){} else {
             session.setAttribute("sexFailure",true);
             flag = false;
         }
-        if (!name.equals("") && authMapper.existUsername(name)!=null){
+        if (authMapper.existUsername(name)!=null){
             session.setAttribute("modifyFailure",true);
+            flag = false;
+        }
+        if (!password.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,18}$")){ //正则表达式
+            session.setAttribute("passwordFailure",true);
             flag = false;
         }
         return flag;
@@ -133,19 +135,36 @@ public class GetDataServiceImpl implements GetDataService {
 
     @Transactional
     @Override
-    public boolean ModifyService(String name, String sex, String grade, String email,String uid,String unChangeUsername, HttpSession session) {
+    public boolean ModifyService(String name, String sex, String grade, String email, String uid, String unChangeUsername, String password, HttpSession session) {
         //从PageController获取参数
-        boolean flag = doModify(name, sex,session);
-        if (flag){
-            authMapper.modifyUserInfo(name,email,uid);
-            authMapper.modifyStudentInfo(uid,name,sex,grade);
+       boolean flag = doModify(name, sex,password,session);//调用信息校验
+        if (flag) {             //  调用信息校验会卡住
+            if (name != " ") {
+                authMapper.modifyUsernameInfo(name, uid);
+            }
+            if (sex != " ") {
+                authMapper.modifySexInfo(sex, uid);
+            }
+            if (grade != " ") {
+                authMapper.modifyGradeInfo(grade, uid);
+            }
+            if (email != " ") {
+                authMapper.modifyEmailInfo(email, uid);
+            }
+            if (password != " ") {
+                authMapper.modifyPasswordInfo(password, uid);
+            }
+        }
+
+//            authMapper.modifyUserInfo(name,email,uid);
+//            authMapper.modifyStudentInfo(uid,name,sex,grade);
 //            if (authMapper.modifyUserInfo(uid,name,email)<=0){       //数据存入user表
 //                throw new RuntimeException("user信息修改失败");
 //            }
 //            if (authMapper.modifyStudentInfo(uid,name,grade,sex)<=0){       //数据存入student表
 //                throw new RuntimeException("student信息修改失败");
 //            }
-        }
+
         return flag;
     }
 
