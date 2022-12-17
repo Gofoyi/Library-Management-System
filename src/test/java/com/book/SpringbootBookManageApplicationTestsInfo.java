@@ -2,6 +2,7 @@ package com.book;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -11,9 +12,8 @@ class SpringbootBookManageApplicationTestsInfo {
 
     @Test
     void tes1() {
-        Random random = new Random();
-        int code = random.nextInt(899999)+100000;
-        System.out.println(code);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("810520440Zh"));
     }
 
 

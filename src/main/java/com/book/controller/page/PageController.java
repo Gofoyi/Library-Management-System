@@ -131,10 +131,6 @@ public class PageController {
 
     @RequestMapping("profile") //信息校验
     public String modify(HttpSession session, Model model){
-        if (session.getAttribute("modifyFailure")!=null){
-            model.addAttribute("modifyFailure",session.getAttribute("modifyFailure"));
-            session.removeAttribute("modifyFailure");
-        }
         if (session.getAttribute("nameFailure")!=null){
             model.addAttribute("nameFailure",session.getAttribute("nameFailure"));
             session.removeAttribute("nameFailure");
@@ -150,18 +146,5 @@ public class PageController {
         return "profile";
     }
 
-    @RequestMapping(value = "/doModify",method = RequestMethod.POST)
-    public String modify(@RequestParam("username") String username,
-                         @RequestParam("sex") String sex,
-                         @RequestParam("grade") String grade,
-                         @RequestParam("email") String email,
-                         @RequestParam("password") String password,
-                         @SessionAttribute("SPRING_SECURITY_CONTEXT") SecurityContext context,HttpSession session){
-        Authentication authentication = context.getAuthentication();
-        User user = (User) authentication.getPrincipal();
-        String unChangeUsername = user.getUsername();
-        String uid = getDataService.getUidByUsername(unChangeUsername); //根据username获取uid
-        getDataService.ModifyService(username,sex,grade,email,uid,unChangeUsername,password,session);    //信息传入ModifyService
-        return "profile";
-    }
+
 }

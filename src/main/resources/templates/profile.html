@@ -208,17 +208,15 @@
                         </div>
                         <div class="card-body">
                             <div class="ad-auth-content"> <!--自动注入 -->
-                            <form action="doModify" method="post" autocomplete="off">
-                                        <p th:if="${modifyFailure}" style="color: red">修改失败!</p>
-
+                                <form action="doModify" method="post" autocomplete="off">
                                         <div class="ad-auth-form"> <!--自动注入 -->
 
                                             <div class="ad-auth-feilds">
                                                 <div class="col-sm-6 col-md-12">
                                                     <div class="mb-3">
-                                                <label class="form-label">姓名</label>
-                                                <input name="username" type="text" placeholder="Name" class="ad-input">
-                                                <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p> <!--错误提示-->
+                                                        <label class="form-label">姓名</label>
+                                                        <input id="username" name="username" type="text" placeholder="Name" class="ad-input" autocomplete="off" readonly="readonly">
+                                                        <p th:if="${nameFailure}" style="color: red">姓名必须为中文！</p> <!--错误提示-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,7 +253,8 @@
                                                 <div class="col-sm-6 col-md-12">
                                                     <div class="mb-3">
                                                         <label class="form-label">密码</label>
-                                                        <input name="password" type="text" placeholder="Password" class="ad-input">
+                                                        <input id="password" name="password" type="password" placeholder="Password" class="ad-input" readonly="readonly">
+                                                        <p th:if="${passwordFailure}" style="color: red">包含大小写字母和数字的组合且长度在8-18之间!</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -264,8 +263,16 @@
                                         <div class="ad-auth-btn">
                                             <button class="ad-btn ad-modify">更新我的个人信息</button>
                                         </div>
-                            </form>
-                        </div>
+                                </form>
+                                <script>
+                                    setTimeout(function removeReadonly(){
+                                        var username=document.getElementById("username");
+                                        var password=document.getElementById("password");
+                                        username.removeAttribute("readonly");
+                                        password.removeAttribute("readonly");
+                                    },1000);
+                                </script>
+                            </div>
                         </div>
                     </div>
                 </div>

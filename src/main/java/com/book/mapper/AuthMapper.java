@@ -61,6 +61,9 @@ public interface AuthMapper {
     @Update("update user set username = #{username} where uid = #{uid}")
     int modifyUsernameInfo(@Param("username")String username,@Param("uid")String uid);
 
+    @Update("update student set name = #{name} where uid = #{uid}")
+    int modifyUserTableUsernameInfo(@Param("name")String name,@Param("uid")String uid);
+
     @Update("update user set email = #{email} where uid = #{uid}")
     int modifyEmailInfo(@Param("email")String email,@Param("uid")String uid);
 
