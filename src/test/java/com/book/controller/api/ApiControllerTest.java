@@ -47,5 +47,21 @@ public class ApiControllerTest {
                 .andReturn();
     }
 
+    @Test
+    @DisplayName("addBorrow接口测试")
+    @WithMockUser(username = "张七七",password = "810520440Zz",roles = {"user"})
+    @Transactional
+    void doModify() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/doModify")
+                        .param("username","")
+                        .param("sex","")
+                        .param("grade","")
+                        .param("email","")
+                        .param("password","810520440Zz"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+    }
+
 
 }
